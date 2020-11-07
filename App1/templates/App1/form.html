@@ -1,0 +1,14 @@
+{% extends 'App1/base.html' %}
+{% block content %}
+
+<div class="my_form container ">
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_table }}
+        <div>
+            <input type="submit" value="Ok">
+        </div>
+    </form>
+</div>
+{% endblock %}
