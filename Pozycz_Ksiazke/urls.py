@@ -24,7 +24,6 @@ urlpatterns = [
     path('add_offer/', AddOfferView.as_view(), name='add_offer'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('reset_password/<int:user_id>/', ResetPasswordView.as_view(), name='reset_password'),
     path('my_offer/', MyOfferView.as_view(), name= 'BookShelf'),
 
 

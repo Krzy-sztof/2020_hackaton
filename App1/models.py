@@ -24,7 +24,7 @@ class Offer(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     price = models.FloatField()
     volume = models.FloatField()
-    type = models.IntegerField(choices=TYPE, default=1)
+    type = models.CharField(max_length=250, default=1)
     calorificValue = models.FloatField()
     sellOrBuy = models.IntegerField(choices=TYPE2, default=1)
 

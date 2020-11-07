@@ -4,21 +4,13 @@ import math
 import csv
 
 from django.contrib.auth import logout, authenticate, login
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
-import pandas as pd
-import requests
 from django.views import View
 from App1.forms import *
 from .models import *
-import json
 import matplotlib
 
 matplotlib.use('Agg')
-from django.http import HttpResponse
-from pylab import *
-import io, base64
-import urllib
 
 
 
@@ -47,6 +39,11 @@ class SearchOfferView(View):
 
             if price != "":
                 offers = Offer.objects.filter(price = price)
+                user_id = request.user.id
+                user = User.objects.get(id=user_id)
+                address = Address.objects.get(user=user_id)
+            elif type != "":
+                offers = Offer.objects.filter(type=type)
                 user_id = request.user.id
                 user = User.objects.get(id=user_id)
                 address = Address.objects.get(user=user_id)
@@ -91,15 +88,6 @@ class AddOfferView(View):
     def post(self, request):
         form = AddOfferForm(request.POST)
         if form.is_valid():
-            # login = form.cleaned_data["login"]
-            # password = form.cleaned_data["password"]
-            # name = form.cleaned_data["name"]
-            # surname = form.cleaned_data["surname"]
-            # mail = form.cleaned_data["mail"]
-            # User.objects.create_user(username=login, password=password, first_name=name, last_name=surname, email=mail)
-            # latitute = form.cleaned_data["latitute"]
-            # longitute = form.cleaned_data["longitute"]
-            # newUser = User.objects.get(username=login)
 
             price = form.cleaned_data["price"]
             volume = form.cleaned_data["volume"]
@@ -143,22 +131,6 @@ class LogoutView(View):
         logout(request)
         return redirect('index')
 
-
-class ResetPasswordView(View):
-    def get(self, request, user_id):
-        form = ResetPasswordForm()
-        return render(request, 'exercises/form.html', {'form': form})
-
-    def post(self, request, user_id):
-        form = ResetPasswordForm(request.POST)
-        if form.is_valid():
-            password = form.cleaned_data['password']
-            u = User.objects.get(id=user_id)
-            u.set_password(password)
-            u.save()
-            return render(request, 'exercises/form.html', {'form': form, 'info': "hasło zmienione"})
-        else:
-            return HttpResponse(" Nie udalo sie zmienic hasla")
 
 
 
